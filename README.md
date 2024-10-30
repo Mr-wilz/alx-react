@@ -56,5 +56,5 @@ Tests created using **Jest** and **Enzyme**:
 ## Name: Wilfort Abel
 ## Email: juiciwhilf@gmail.com
 
-##📜 License
+📜 License
 This project is licensed under the MIT License. 📄
