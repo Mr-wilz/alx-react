@@ -1,0 +1,10 @@
+.Notifications {
+    border: 2px solid #FF0000.;
+    padding: 20px;
+}
+li [data="default"] {
+	color: #89CFF0;
+}
+li [data="urgent"] {
+	color: #FF0000.;
+}
