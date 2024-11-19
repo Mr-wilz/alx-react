@@ -1,47 +1,57 @@
 import React from 'react';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-const Login = () => {
-  return (
-    <>
-      <div className={css(styles.appBody, styles.small)}>
-        <h1>Log in to continue</h1>
-        <p>Login to access the full dashboard</p>
-        <label htmlFor="email">Email: </label>
-        <input className={css(styles.noBorder)} type="email" id="email" name="email" />
-        <label htmlFor="password">Password: </label>
-        <input className={css(styles.noBorder)} type="password" id="password" name="password" />
-        <button className={css(styles.yellowBorder)}>OK</button>
-      </div>
-    </>
-  );
+export default function Login() {
+    return (
+        <div className={css(styles.AppBody)}>
+            <p>
+                Login to access the full dashboard
+            </p>
+            <form className={css(styles.AppBodyForm, styles.small)}>
+                <div>
+                    <label htmlFor="email" className={css(styles.AppBodyLabel)}>
+                        Email
+                    </label>
+                    <input type="email" name="email" className={css(styles.AppBodyInput)}/>
+                </div>
+                <div>
+                    <label htmlFor="password" className={css(styles.AppBodyLabel)}>
+                        Password
+                    </label>
+                    <input type="password" name="password" className={css(styles.AppBodyInput)}/>
+                </div>
+                <button type="submit" className={css(styles.AppBodyButton)}>OK</button>
+            </form>
+        </div>
+    )
 }
 
 const styles = StyleSheet.create({
-  appBody: {
-    minHeight: '50vh',
-    textAlign: 'left',
-    marginTop: '2rem',
-    marginLeft: '2rem',
-  },
-  small: {
-    '@media (max-width: 900px)': {
-      display: 'grid',
-      justifyContent: 'center',
+    AppBody: {
+        padding: '36px 24px'
+    },
+    AppBodyInput: {
+        padding: '0 16px 0 8px',
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px'
+    },
+    AppBodyLabel: {
+        marginRight: '5px'
+    },
+    AppBodyForm: {
+        display: 'flex',
+        gap: '1rem'
+    },
+    AppBodyButton: {
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px',
+        background: 'transparent',
+        width: 50
+    },
+    small: {
+        '@media (max-width: 900px)': {
+            display: 'flex',
+            flexDirection: 'column',
+        }
     }
-  },
-  noBorder: {
-    '@media (max-width: 900px)': {
-      border: 'none'
-    }
-  },
-  yellowBorder: {
-    '@media (max-width: 900px)': {
-      border: '2px solid gold',
-      backgroundColor: 'transparent',
-      width: '5vw'
-    }
-  }
 })
-
-export default Login;

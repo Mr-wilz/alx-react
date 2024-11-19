@@ -1,103 +1,97 @@
 import React from 'react';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
 class Login extends React.Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoggedIn: false,
+      email: '',
+      password: '',
+      enableSubmit: false,
+    }
+  }
 
-		this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
-		this.handleChangeEmail = this.handleChangeEmail.bind(this);
-		this.handleChangePassword = this.handleChangePassword.bind(this);
-		this.state = {
-			isLoggedIn: false,
-			email: '',
-			password: '',
-			enableSubmit: false,
-		};
-	}
+  handleLoginSubmit = (e) => {
+    e.preventDefault();
+    this.setState({ isLoggedIn: true });
+  };
 
-	handleLoginSubmit(e) {
-		e.preventDefault();
-		this.setState({ isLoggedIn: true });
-	}
+  handleChangeEmail = (e) => {
+    this.setState({ email: e.target.value });
+  };
 
-	handleChangeEmail(event) {
-		this.setState({ email: event.target.value });
-		this.state.email !== '' && this.state.password !== ''
-			? this.setState({ enableSubmit: true })
-			: this.setState({ enableSubmit: false });
-	}
+  handleChangePassword = (e) => {
+    this.setState({ password: e.target.value });
+  };
 
-	handleChangePassword(event) {
-		this.setState({ password: event.target.value });
-		this.state.email !== '' && this.state.password !== ''
-			? this.setState({ enableSubmit: true })
-			: this.setState({ enableSubmit: false });
-	}
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.email !== prevState.email || this.state.password !== prevState.password) {
+      if (this.state.email !== '' && this.state.password !== '') {
+        this.setState({ enableSubmit: true });
+      } else {
+        if (this.state.enableSubmit !== false) {
+          this.setState({ enableSubmit: false });
+        }
+      }
+    }
+  }
 
-	render() {
-		return (
-			<>
-				<div className={css(styles.appBody, styles.small)}>
-					<h1>Log in to continue</h1>
-					<p>Login to access the full dashboard</p>
-					<form onSubmit={this.handleLoginSubmit}>
-						<label htmlFor='email'>Email: </label>
-						<input
-							className={css(styles.noBorder)}
-							type='email'
-							id='email'
-							name='email'
-							onChange={this.handleChangeEmail}
-							value={this.state.email}
-						/>
-						<label htmlFor='password'>Password: </label>
-						<input
-							className={css(styles.noBorder)}
-							type='password'
-							id='password'
-							name='password'
-							onChange={this.handleChangePassword}
-							value={this.state.password}
-						/>
-						<input
-							className={css(styles.yellowBorder)}
-							type='submit'
-							value='OK'
-							disabled={!this.state.enableSubmit}
-						/>
-					</form>
-				</div>
-			</>
-		);
-	}
+  render() {
+    return (
+      <div className={css(styles.AppBody)}>
+        <p>
+            Login to access the full dashboard
+        </p>
+        <form className={css(styles.AppBodyForm, styles.small)} onSubmit={this.handleLoginSubmit}>
+            <div>
+                <label htmlFor="email" className={css(styles.AppBodyLabel)}>
+                    Email
+                </label>
+                <input type="email" name="email" className={css(styles.AppBodyInput)} value={this.state.email} onChange={this.handleChangeEmail}/>
+            </div>
+            <div>
+                <label htmlFor="password" className={css(styles.AppBodyLabel)}>
+                    Password
+                </label>
+                <input type="password" name="password" className={css(styles.AppBodyInput)} value={this.state.password} onChange={this.handleChangePassword}/>
+            </div>
+            <input type="submit" className={css(styles.AppBodyButton)} value="OK" disabled={this.state.enableSubmit}/>
+        </form>
+      </div>
+    );
+  }
 }
 
+
 const styles = StyleSheet.create({
-	appBody: {
-		minHeight: '50vh',
-		textAlign: 'left',
-		marginTop: '2rem',
-		marginLeft: '2rem',
-	},
-	small: {
-		'@media (max-width: 900px)': {
-			display: 'grid',
-			justifyContent: 'center',
-		},
-	},
-	noBorder: {
-		'@media (max-width: 900px)': {
-			border: 'none',
-		},
-	},
-	yellowBorder: {
-		'@media (max-width: 900px)': {
-			border: '2px solid gold',
-			backgroundColor: 'transparent',
-			width: '5vw',
-		},
-	},
-});
+    AppBody: {
+        padding: '36px 24px'
+    },
+    AppBodyInput: {
+        padding: '0 16px 0 8px',
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px'
+    },
+    AppBodyLabel: {
+        marginRight: '5px'
+    },
+    AppBodyForm: {
+        display: 'flex',
+        gap: '1rem'
+    },
+    AppBodyButton: {
+        border: '1px solid #D3D3D3',
+        borderRadius: '3px',
+        background: 'transparent',
+        width: 50
+    },
+    small: {
+        '@media (max-width: 900px)': {
+            display: 'flex',
+            flexDirection: 'column',
+        }
+    }
+})
 
 export default Login;

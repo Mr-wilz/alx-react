@@ -1,55 +1,56 @@
-import React from 'react';
+import holbertonLogo from '../assets/holberton_logo.jpg';
+import React, {useContext} from 'react';
 import { StyleSheet, css } from 'aphrodite';
-import holberton_logo from '../assets/holberton_logo.jpeg';
 import { AppContext } from '../App/AppContext';
 
-class Header extends React.Component {
-	render() {
-		const data = this.context;
-		return (
-			<React.Fragment>
-				<div className={css(styles.header)}>
-					<img src={holberton_logo} className={css(styles.logo)} alt='logo' />
-					<h1 className={css(styles.title)}>School dashboard</h1>
-				</div>
-				{data.user.isLoggedIn && (
-					<div className={css(styles.greeting)} id='logoutSection'>
-						Welcome {data.user.email}{' '}
-						<a className={css(styles.logout)} onClick={data.logOut}>
-							(logout)
-						</a>
-					</div>
-				)}
-			</React.Fragment>
-		);
-	}
-}
-
-Header.contextType = AppContext;
 
 const styles = StyleSheet.create({
-	header: {
-		display: 'flex',
-		alignItems: 'center',
-		fontSize: 'calc(10px + 2vmin)',
-		color: 'white',
-		'@media (max-width: 900px)': {
-			justifyContent: 'center',
-		},
-	},
-	title: {
-		color: 'red',
-	},
-	logo: {
-		height: '100px',
-		width: '100px',
-	},
-	greeting: {
-		marginTop: '1rem',
-	},
-	logout: {
-		cursor: 'pointer',
-	},
-});
+  header: {
+    display: "flex",
+    alignItems: "center",
+    marginBottom: 60
+  },
+  
+  img: {
+    width: 160,
+    height: 160
+  },
+  
+  heading: {
+    color: "#E0354B"
+  },
 
-export default Header;
+  logOut: {
+    fontStyle: "italic",
+    textDecoration: "underline",
+    cursor: "pointer"
+  }
+
+})
+
+export default class Header extends React.Component {
+  // static contextType = AppContext
+  render() {
+    const data = this.context
+    const email = data.currentUser.email
+    const displayText = () => {
+      if (data.currentUser.isLoggedIn){
+        return (
+        <section id="logoutSection">Welcome {email}
+          <span  className={css(styles.logOut)} onClick={data.logOut}>(logout)</span>
+        </section>
+        )
+      }
+    }
+    return (
+      <React.Fragment>
+      <div className={css(styles.header)}>
+        <img className={css(styles.img)} src={holbertonLogo} alt="logo"/>
+        <h1 className={css(styles.heading)}>School dashboard</h1>
+      </div>
+      {displayText()}
+      </React.Fragment>
+    )
+  }
+}
+Header.contextType = AppContext

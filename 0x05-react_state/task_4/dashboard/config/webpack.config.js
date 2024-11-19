@@ -1,4 +1,3 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -35,13 +34,10 @@ module.exports = {
 		],
 	},
 	resolve: {
-		alias: {
-			'react-dom': 'react-dom/profiling',
-			'schedule/tracing': 'schedule/tracing-profiling',
-		},
+		extensions: ['*', '.js', '.jsx'],
 	},
 	devServer: {
-		contentBase: './dist',
+		static: './dist',
 		compress: true,
 		open: true,
 		hot: true,

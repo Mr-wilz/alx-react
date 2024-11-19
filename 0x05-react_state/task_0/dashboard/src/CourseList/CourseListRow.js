@@ -1,49 +1,47 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css } from 'aphrodite/no-important';
 
-const rowStyle = { color: '#f5f5f5ab' };
-const headerStyle = { color: '#deb5b545' };
+function CourseListRow(props) {
 
-const CourseListRow = ({ isHeader = false, textFirstCell, textSecondCell = null }) => {
+  const styleToUse = props.isHeader ? styles.rowBg : styles.headerRowBg
+  if (props.isHeader) {
+    if (props.textSecondCell == null) {
+      return <tr className={css(styleToUse)}><th colSpan="2">{props.textFirstCell}</th></tr>
+    } else {
+      return (
+        <tr className={css(styleToUse)}>
+          <th>{props.textFirstCell}</th>
+          <th>{props.textSecondCell}</th>
+        </tr>
+        )
+    }
+  } 
   return (
-    <tr style={
-      isHeader
-        ? headerStyle
-        : rowStyle
-    }>
-      {
-        isHeader
-          ? textSecondCell
-            ?
-            <>
-              <th className={css(styles.cell)}>{textFirstCell}</th>
-              <th className={css(styles.cell)}>{textSecondCell}</th>
-            </>
-            : <th colSpan={2}>{textFirstCell}</th>
-          : <>
-            <td className={css(styles.cell)}>{textFirstCell}</td>
-            <td className={css(styles.cell)}>{textSecondCell}</td>
-          </>
-      }
+    <tr className={css(styleToUse)}>
+      <td>{props.textFirstCell}</td>
+      <td>{props.textSecondCell}</td>
     </tr>
-  );
+  )
+}
+const styles = StyleSheet.create({
+  headerRowBg: {
+    backgroundColor: '#deb5b545'
+  },
+  rowBg: {
+    backgroundColor: '#f5f5f5ab'
+  }
+})
+
+CourseListRow.defaultProps = {
+  isHeader: false,
+  textSecondCell: null
 }
 
 CourseListRow.propTypes = {
   isHeader: PropTypes.bool,
-  textFirstCell: PropTypes.string.isRequired,
-  textSecondCell: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ])
+  textFirstCell: PropTypes.string,
+  textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 }
 
-const styles = StyleSheet.create({
-  cell: {
-    border: '1px solid #ddd',
-    width: '80%'
-  }
-})
-
-export default CourseListRow;
+export default CourseListRow
