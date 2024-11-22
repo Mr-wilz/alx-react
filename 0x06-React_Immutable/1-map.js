@@ -5,7 +5,7 @@ import { Map } from 'immutable';
  * @param {Object} object - The object to convert
  * @returns {Map} An Immutable Map
  */
+
 export default function getImmutableObject(object) {
   return Map(object);
 }
-
